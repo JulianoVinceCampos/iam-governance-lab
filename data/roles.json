@@ -1,0 +1,38 @@
+[
+  {
+    "id": "R001",
+    "name": "analyst",
+    "description": "Standard analyst - read access to reports and dashboards",
+    "permissions": ["read:reports", "read:dashboards", "read:invoices"]
+  },
+  {
+    "id": "R002",
+    "name": "approver",
+    "description": "Financial approver - can approve payments and purchase orders",
+    "permissions": ["read:reports", "approve:payments", "approve:purchase_orders", "read:invoices"]
+  },
+  {
+    "id": "R003",
+    "name": "admin",
+    "description": "IT administrator - full system access",
+    "permissions": ["read:reports", "write:users", "delete:users", "manage:systems", "read:invoices", "approve:payments"]
+  },
+  {
+    "id": "R004",
+    "name": "manager",
+    "description": "Department manager - team oversight and HR actions",
+    "permissions": ["read:reports", "read:dashboards", "manage:team", "approve:timesheets", "read:invoices"]
+  },
+  {
+    "id": "R005",
+    "name": "auditor",
+    "description": "Read-only auditor - view all resources for compliance",
+    "permissions": ["read:reports", "read:dashboards", "read:invoices", "read:logs", "read:users"]
+  },
+  {
+    "id": "R006",
+    "name": "procurement",
+    "description": "Procurement officer - create and manage purchase orders",
+    "permissions": ["read:reports", "create:purchase_orders", "read:invoices", "read:dashboards"]
+  }
+]
