@@ -1,0 +1,67 @@
+[
+  {
+    "id": "U001",
+    "name": "Alice Souza",
+    "email": "alice.souza@example.com",
+    "department": "Finance",
+    "role": "analyst",
+    "status": "active",
+    "attributes": {
+      "location": "BR",
+      "clearance": "standard",
+      "contract_type": "full_time"
+    }
+  },
+  {
+    "id": "U002",
+    "name": "Bruno Martins",
+    "email": "bruno.martins@example.com",
+    "department": "IT",
+    "role": "admin",
+    "status": "active",
+    "attributes": {
+      "location": "BR",
+      "clearance": "high",
+      "contract_type": "full_time"
+    }
+  },
+  {
+    "id": "U003",
+    "name": "Carla Nunes",
+    "email": "carla.nunes@example.com",
+    "department": "HR",
+    "role": "manager",
+    "status": "active",
+    "attributes": {
+      "location": "US",
+      "clearance": "standard",
+      "contract_type": "contractor"
+    }
+  },
+  {
+    "id": "U004",
+    "name": "Diego Ferreira",
+    "email": "diego.ferreira@example.com",
+    "department": "Finance",
+    "role": "approver",
+    "status": "active",
+    "attributes": {
+      "location": "BR",
+      "clearance": "high",
+      "contract_type": "full_time"
+    }
+  },
+  {
+    "id": "U005",
+    "name": "Elena Costa",
+    "email": "elena.costa@example.com",
+    "department": "Procurement",
+    "role": "analyst",
+    "status": "active",
+    "attributes": {
+      "location": "EU",
+      "clearance": "standard",
+      "contract_type": "full_time"
+    }
+  }
+]
