@@ -1,0 +1,40 @@
+{
+  "description": "Segregation of Duties conflict matrix. Each entry defines a pair of permissions that must not coexist for the same user.",
+  "conflicts": [
+    {
+      "id": "SOD001",
+      "permission_a": "approve:payments",
+      "permission_b": "create:purchase_orders",
+      "risk_level": "critical",
+      "rationale": "A user who can approve payments must not also create purchase orders - this enables fraudulent self-approval of transactions."
+    },
+    {
+      "id": "SOD002",
+      "permission_a": "approve:payments",
+      "permission_b": "write:users",
+      "risk_level": "high",
+      "rationale": "A user who can approve payments must not manage user accounts - risk of creating ghost users to redirect payments."
+    },
+    {
+      "id": "SOD003",
+      "permission_a": "delete:users",
+      "permission_b": "read:logs",
+      "risk_level": "high",
+      "rationale": "A user who can delete accounts must not also read audit logs - risk of covering tracks after unauthorized deletions."
+    },
+    {
+      "id": "SOD004",
+      "permission_a": "create:purchase_orders",
+      "permission_b": "approve:purchase_orders",
+      "risk_level": "critical",
+      "rationale": "Classic four-eyes principle violation: the requestor of a purchase order must not be its own approver."
+    },
+    {
+      "id": "SOD005",
+      "permission_a": "manage:systems",
+      "permission_b": "approve:payments",
+      "risk_level": "critical",
+      "rationale": "System administrators must not have financial approval rights - separation between IT and Finance controls."
+    }
+  ]
+}
