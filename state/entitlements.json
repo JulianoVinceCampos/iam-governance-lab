@@ -1,0 +1,80 @@
+{
+  "last_updated": "2024-01-01T00:00:00Z",
+  "entitlements": {
+    "U001": {
+      "user_id": "U001",
+      "name": "Alice Souza",
+      "department": "Finance",
+      "role": "analyst",
+      "status": "active",
+      "applications": ["APP001"],
+      "permissions": ["read:reports", "read:dashboards", "read:invoices"],
+      "attributes": {
+        "location": "BR",
+        "clearance": "standard",
+        "contract_type": "full_time"
+      },
+      "granted_at": "2024-01-01T00:00:00Z"
+    },
+    "U002": {
+      "user_id": "U002",
+      "name": "Bruno Martins",
+      "department": "IT",
+      "role": "admin",
+      "status": "active",
+      "applications": ["APP001", "APP004"],
+      "permissions": ["read:reports", "write:users", "delete:users", "manage:systems", "read:invoices", "approve:payments"],
+      "attributes": {
+        "location": "BR",
+        "clearance": "high",
+        "contract_type": "full_time"
+      },
+      "granted_at": "2024-01-01T00:00:00Z"
+    },
+    "U003": {
+      "user_id": "U003",
+      "name": "Carla Nunes",
+      "department": "HR",
+      "role": "manager",
+      "status": "active",
+      "applications": ["APP002", "APP005"],
+      "permissions": ["read:reports", "read:dashboards", "manage:team", "approve:timesheets", "read:invoices"],
+      "attributes": {
+        "location": "US",
+        "clearance": "standard",
+        "contract_type": "contractor"
+      },
+      "granted_at": "2024-01-01T00:00:00Z"
+    },
+    "U004": {
+      "user_id": "U004",
+      "name": "Diego Ferreira",
+      "department": "Finance",
+      "role": "approver",
+      "status": "active",
+      "applications": ["APP001", "APP003"],
+      "permissions": ["read:reports", "approve:payments", "approve:purchase_orders", "read:invoices"],
+      "attributes": {
+        "location": "BR",
+        "clearance": "high",
+        "contract_type": "full_time"
+      },
+      "granted_at": "2024-01-01T00:00:00Z"
+    },
+    "U005": {
+      "user_id": "U005",
+      "name": "Elena Costa",
+      "department": "Procurement",
+      "role": "analyst",
+      "status": "active",
+      "applications": ["APP003"],
+      "permissions": ["read:reports", "read:dashboards", "read:invoices"],
+      "attributes": {
+        "location": "EU",
+        "clearance": "standard",
+        "contract_type": "full_time"
+      },
+      "granted_at": "2024-01-01T00:00:00Z"
+    }
+  }
+}
