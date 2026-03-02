@@ -1,0 +1,67 @@
+[
+  {
+    "id": "APP001",
+    "name": "ERP-Finance",
+    "description": "Enterprise Resource Planning - Finance module",
+    "owner": "Finance",
+    "sensitivity": "high",
+    "required_roles": ["analyst", "approver", "admin"],
+    "abac_policy": {
+      "allowed_locations": ["BR", "US", "EU"],
+      "min_clearance": "standard",
+      "allowed_contracts": ["full_time", "contractor"]
+    }
+  },
+  {
+    "id": "APP002",
+    "name": "HR-Portal",
+    "description": "Human Resources self-service portal",
+    "owner": "HR",
+    "sensitivity": "medium",
+    "required_roles": ["manager", "admin", "auditor"],
+    "abac_policy": {
+      "allowed_locations": ["BR", "US", "EU"],
+      "min_clearance": "standard",
+      "allowed_contracts": ["full_time"]
+    }
+  },
+  {
+    "id": "APP003",
+    "name": "Procurement-Suite",
+    "description": "Procurement and vendor management system",
+    "owner": "Procurement",
+    "sensitivity": "medium",
+    "required_roles": ["procurement", "approver", "admin"],
+    "abac_policy": {
+      "allowed_locations": ["BR", "US", "EU"],
+      "min_clearance": "standard",
+      "allowed_contracts": ["full_time", "contractor"]
+    }
+  },
+  {
+    "id": "APP004",
+    "name": "IT-Admin-Console",
+    "description": "Internal IT administration and monitoring console",
+    "owner": "IT",
+    "sensitivity": "critical",
+    "required_roles": ["admin"],
+    "abac_policy": {
+      "allowed_locations": ["BR"],
+      "min_clearance": "high",
+      "allowed_contracts": ["full_time"]
+    }
+  },
+  {
+    "id": "APP005",
+    "name": "Audit-Dashboard",
+    "description": "Compliance and audit reporting dashboard",
+    "owner": "Compliance",
+    "sensitivity": "high",
+    "required_roles": ["auditor", "admin", "manager"],
+    "abac_policy": {
+      "allowed_locations": ["BR", "US", "EU"],
+      "min_clearance": "standard",
+      "allowed_contracts": ["full_time"]
+    }
+  }
+]
