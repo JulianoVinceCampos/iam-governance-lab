@@ -1,9 +1,7 @@
 """Shared test fixtures and configuration."""
 
 import json
-import os
-import tempfile
-from pathlib import Path
+
 import pytest
 
 
@@ -30,7 +28,11 @@ def isolated_state(tmp_path, monkeypatch):
                 "status": "active",
                 "applications": ["APP001"],
                 "permissions": ["read:reports", "read:dashboards", "read:invoices"],
-                "attributes": {"location": "BR", "clearance": "standard", "contract_type": "full_time"},
+                "attributes": {
+                    "location": "BR",
+                    "clearance": "standard",
+                    "contract_type": "full_time",
+                },
                 "granted_at": "2024-01-01T00:00:00Z",
             },
             "U002": {
@@ -42,8 +44,12 @@ def isolated_state(tmp_path, monkeypatch):
                 "status": "active",
                 "applications": ["APP001", "APP004"],
                 "permissions": [
-                    "read:reports", "write:users", "delete:users",
-                    "manage:systems", "read:invoices", "approve:payments",
+                    "read:reports",
+                    "write:users",
+                    "delete:users",
+                    "manage:systems",
+                    "read:invoices",
+                    "approve:payments",
                 ],
                 "attributes": {"location": "BR", "clearance": "high", "contract_type": "full_time"},
                 "granted_at": "2024-01-01T00:00:00Z",
@@ -56,7 +62,12 @@ def isolated_state(tmp_path, monkeypatch):
                 "role": "approver",
                 "status": "active",
                 "applications": ["APP001", "APP003"],
-                "permissions": ["read:reports", "approve:payments", "approve:purchase_orders", "read:invoices"],
+                "permissions": [
+                    "read:reports",
+                    "approve:payments",
+                    "approve:purchase_orders",
+                    "read:invoices",
+                ],
                 "attributes": {"location": "BR", "clearance": "high", "contract_type": "full_time"},
                 "granted_at": "2024-01-01T00:00:00Z",
             },
@@ -68,6 +79,7 @@ def isolated_state(tmp_path, monkeypatch):
 
     # We need to patch the module-level STATE_PATH variable after env var is set
     import iam_governance.state as state_module
+
     monkeypatch.setattr(state_module, "STATE_PATH", state_file)
 
     yield tmp_path

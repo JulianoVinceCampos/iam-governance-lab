@@ -1,8 +1,7 @@
 """Tests for RBAC and ABAC modules."""
 
-import pytest
-from iam_governance.rbac import get_permissions_for_role, get_role, resolve_applications_for_role
 from iam_governance.abac import evaluate_abac, evaluate_user_app_access
+from iam_governance.rbac import get_permissions_for_role, get_role, resolve_applications_for_role
 
 
 class TestRBAC:
@@ -49,7 +48,11 @@ class TestRBAC:
 class TestABAC:
     def test_valid_user_allowed(self):
         user_attrs = {"location": "BR", "clearance": "standard", "contract_type": "full_time"}
-        policy = {"allowed_locations": ["BR", "US"], "min_clearance": "standard", "allowed_contracts": ["full_time"]}
+        policy = {
+            "allowed_locations": ["BR", "US"],
+            "min_clearance": "standard",
+            "allowed_contracts": ["full_time"],
+        }
         result = evaluate_abac(user_attrs, policy)
         assert result["allowed"] is True
         assert result["violations"] == []
@@ -97,7 +100,10 @@ class TestABAC:
         assert result["allowed"] is True
 
     def test_evaluate_user_app_access_returns_ids(self):
-        user = {"id": "U001", "attributes": {"location": "BR", "clearance": "standard", "contract_type": "full_time"}}
+        user = {
+            "id": "U001",
+            "attributes": {"location": "BR", "clearance": "standard", "contract_type": "full_time"},
+        }
         app = {"id": "APP001", "name": "ERP", "abac_policy": {"allowed_locations": ["BR"]}}
         result = evaluate_user_app_access(user, app)
         assert result["user_id"] == "U001"

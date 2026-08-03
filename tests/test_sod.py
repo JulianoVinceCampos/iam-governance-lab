@@ -1,6 +1,5 @@
 """Tests for SoD (Segregation of Duties) detection."""
 
-import pytest
 from iam_governance.sod import check_sod_violations, run_sod_for_all
 
 

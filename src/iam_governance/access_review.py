@@ -105,7 +105,4 @@ def load_campaign(campaign_name: str) -> dict[str, Any] | None:
 
 def list_campaigns() -> list[str]:
     """Return list of all campaign names in state/."""
-    return [
-        p.stem.replace("campaign_", "")
-        for p in CAMPAIGNS_DIR.glob("campaign_*.json")
-    ]
+    return [p.stem.replace("campaign_", "") for p in CAMPAIGNS_DIR.glob("campaign_*.json")]

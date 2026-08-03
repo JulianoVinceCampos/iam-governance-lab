@@ -1,6 +1,5 @@
 """Tests for JML (Joiner, Mover, Leaver) lifecycle operations."""
 
-import pytest
 from iam_governance import jml
 from iam_governance.state import get_entitlement
 
@@ -59,7 +58,10 @@ class TestMover:
         result = jml.simulate_mover("U002", "Finance", "analyst")
         assert result["success"] is True
         # admin permissions not in analyst should be revoked
-        assert "manage:systems" in result["revoked_permissions"] or len(result["revoked_permissions"]) > 0
+        assert (
+            "manage:systems" in result["revoked_permissions"]
+            or len(result["revoked_permissions"]) > 0
+        )
 
     def test_mover_unknown_user_fails(self):
         """Moving a non-existent user should fail."""
