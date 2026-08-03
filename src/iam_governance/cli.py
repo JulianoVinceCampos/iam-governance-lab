@@ -1,13 +1,14 @@
 """CLI entry point - all commands defined here using Typer."""
 
 from typing import Optional
-import typer
-from rich.console import Console
-from rich.table import Table
-from rich.panel import Panel
-from rich import box
 
-from iam_governance import jml, sod, access_review, reports
+import typer
+from rich import box
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
+
+from iam_governance import access_review, jml, reports, sod
 from iam_governance.state import get_entitlement, list_entitlements
 
 app = typer.Typer(
@@ -37,13 +38,18 @@ def cmd_simulate_joiner(
         console.print(f"[bold red]ERROR:[/bold red] {result['error']}")
         raise typer.Exit(1)
 
-    console.print(f"[bold green]SUCCESS:[/bold green] User [cyan]{result['name']}[/cyan] ({user_id}) provisioned.")
+    console.print(
+        f"[bold green]SUCCESS:[/bold green] User [cyan]{result['name']}[/cyan] "
+        f"({user_id}) provisioned."
+    )
     console.print(f"  Role       : [yellow]{result['role']}[/yellow]")
-    console.print(f"  Applications provisioned: [green]{result['provisioned_applications']}[/green]")
+    console.print(
+        f"  Applications provisioned: [green]{result['provisioned_applications']}[/green]"
+    )
     console.print(f"  Permissions: {result['permissions']}")
 
     if result["denied_applications"]:
-        console.print(f"  [orange3]ABAC denied access to:[/orange3]")
+        console.print("  [orange3]ABAC denied access to:[/orange3]")
         for denied in result["denied_applications"]:
             console.print(f"    - {denied['app_id']}: {denied['reasons']}")
 
@@ -52,7 +58,9 @@ def cmd_simulate_joiner(
 def cmd_simulate_mover(
     user_id: str = typer.Option(..., "--user-id", help="User ID to transfer"),
     new_dept: str = typer.Option(..., "--new-dept", help="New department name"),
-    new_role: str = typer.Option(..., "--new-role", help="New role name (must exist in data/roles.json)"),
+    new_role: str = typer.Option(
+        ..., "--new-role", help="New role name (must exist in data/roles.json)"
+    ),
 ) -> None:
     """Transfer user to a new department/role (Mover). Re-provisions access via least-privilege."""
     console.rule("[bold yellow]JML - Mover Event[/bold yellow]")
@@ -62,8 +70,15 @@ def cmd_simulate_mover(
         console.print(f"[bold red]ERROR:[/bold red] {result['error']}")
         raise typer.Exit(1)
 
-    console.print(f"[bold green]SUCCESS:[/bold green] {result['name']} moved from [yellow]{result['old_department']}[/yellow] to [cyan]{result['new_department']}[/cyan].")
-    console.print(f"  Old role -> New role: [yellow]{result['old_role']}[/yellow] -> [green]{result['new_role']}[/green]")
+    console.print(
+        f"[bold green]SUCCESS:[/bold green] {result['name']} moved from "
+        f"[yellow]{result['old_department']}[/yellow] to "
+        f"[cyan]{result['new_department']}[/cyan]."
+    )
+    console.print(
+        f"  Old role -> New role: [yellow]{result['old_role']}[/yellow] -> "
+        f"[green]{result['new_role']}[/green]"
+    )
     console.print(f"  Old apps: {result['old_applications']}")
     console.print(f"  New apps: {result['new_applications']}")
     if result["revoked_permissions"]:
@@ -84,7 +99,9 @@ def cmd_simulate_leaver(
         console.print(f"[bold red]ERROR:[/bold red] {result['error']}")
         raise typer.Exit(1)
 
-    console.print(f"[bold green]SUCCESS:[/bold green] {result['name']} ({user_id}) fully de-provisioned.")
+    console.print(
+        f"[bold green]SUCCESS:[/bold green] {result['name']} ({user_id}) fully de-provisioned."
+    )
     console.print(f"  Revoked applications : [red]{result['revoked_applications']}[/red]")
     console.print(f"  Revoked permissions  : [red]{result['revoked_permissions']}[/red]")
     console.print(f"  Timestamp            : {result['deprovisioned_at']}")
@@ -97,7 +114,9 @@ def cmd_simulate_leaver(
 
 @app.command("check-sod")
 def cmd_check_sod(
-    user_id: Optional[str] = typer.Option(None, "--user-id", help="User ID to check (omit to check ALL active users)"),
+    user_id: Optional[str] = typer.Option(
+        None, "--user-id", help="User ID to check (omit to check ALL active users)"
+    ),
 ) -> None:
     """Check Segregation of Duties violations against the SoD conflict matrix."""
     console.rule("[bold magenta]SoD - Segregation of Duties Check[/bold magenta]")
@@ -142,11 +161,15 @@ def cmd_check_sod(
     # Print details for violations
     for result in results:
         if not result["clean"]:
-            console.print(f"\n[bold red]Violation details for {result['user_id']} ({result.get('name','')}):[/bold red]")
+            console.print(
+                f"\n[bold red]Violation details for {result['user_id']} "
+                f"({result.get('name', '')}):[/bold red]"
+            )
             for v in result["violations"]:
                 console.print(
                     Panel(
-                        f"[bold]{v['conflict_id']}[/bold] - Risk: [red]{v['risk_level'].upper()}[/red]\n"
+                        f"[bold]{v['conflict_id']}[/bold] - Risk: "
+                        f"[red]{v['risk_level'].upper()}[/red]\n"
                         f"Permission A: [yellow]{v['permission_a']}[/yellow]\n"
                         f"Permission B: [yellow]{v['permission_b']}[/yellow]\n"
                         f"Rationale: {v['rationale']}",
@@ -159,7 +182,10 @@ def cmd_check_sod(
     if violations_found == 0:
         console.print("\n[bold green]All checked users are SoD-compliant.[/bold green]")
     else:
-        console.print(f"\n[bold red]{violations_found} user(s) have SoD violations requiring remediation.[/bold red]")
+        console.print(
+            f"\n[bold red]{violations_found} user(s) have SoD violations "
+            "requiring remediation.[/bold red]"
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -169,7 +195,9 @@ def cmd_check_sod(
 
 @app.command("run-access-review")
 def cmd_run_access_review(
-    campaign_name: str = typer.Option(..., "--campaign-name", help="Unique name for this review campaign"),
+    campaign_name: str = typer.Option(
+        ..., "--campaign-name", help="Unique name for this review campaign"
+    ),
 ) -> None:
     """Launch an access review campaign. Generates review items for all active users."""
     console.rule("[bold blue]Access Review Campaign[/bold blue]")
@@ -198,25 +226,34 @@ def cmd_run_access_review(
         )
 
     console.print(table)
-    console.print(f"\n[bold]Summary:[/bold]")
+    console.print("\n[bold]Summary:[/bold]")
     console.print(f"  Users reviewed  : {campaign['users_reviewed']}")
     console.print(f"  Total items     : {campaign['total_items']}")
     console.print(f"  Approved        : [green]{campaign['approved']}[/green]")
     console.print(f"  Denied          : [red]{campaign['denied']}[/red]")
-    console.print(f"\nCampaign saved to state/. Run [bold]export-evidence --campaign-name \"{campaign_name}\"[/bold] to generate reports.")
+    console.print(
+        "\nCampaign saved to state/. Run "
+        f'[bold]export-evidence --campaign-name "{campaign_name}"[/bold] '
+        "to generate reports."
+    )
 
 
 @app.command("export-evidence")
 def cmd_export_evidence(
     campaign_name: str = typer.Option(..., "--campaign-name", help="Campaign name to export"),
-    include_sod: bool = typer.Option(True, "--include-sod/--no-sod", help="Include SoD summary in Markdown report"),
+    include_sod: bool = typer.Option(
+        True, "--include-sod/--no-sod", help="Include SoD summary in Markdown report"
+    ),
 ) -> None:
     """Export access review evidence as CSV and Markdown reports."""
     console.rule("[bold blue]Evidence Export[/bold blue]")
 
     campaign = access_review.load_campaign(campaign_name)
     if campaign is None:
-        console.print(f"[bold red]ERROR:[/bold red] Campaign '{campaign_name}' not found. Run run-access-review first.")
+        console.print(
+            f"[bold red]ERROR:[/bold red] Campaign '{campaign_name}' not found. "
+            "Run run-access-review first."
+        )
         raise typer.Exit(1)
 
     # SoD results for Markdown report
@@ -228,7 +265,11 @@ def cmd_export_evidence(
     csv_path = reports.export_csv(campaign)
     md_path = reports.export_markdown(campaign, sod_results)
 
-    console.print(f"[bold green]Evidence exported successfully:[/bold green]")
+    console.print("[bold green]Evidence exported successfully:[/bold green]")
     console.print(f"  CSV      : [cyan]{csv_path}[/cyan]")
     console.print(f"  Markdown : [cyan]{md_path}[/cyan]")
-    console.print(f"\nApproved : [green]{campaign['approved']}[/green]  |  Denied: [red]{campaign['denied']}[/red]  |  Total: {campaign['total_items']}")
+    console.print(
+        f"\nApproved : [green]{campaign['approved']}[/green]  |  "
+        f"Denied: [red]{campaign['denied']}[/red]  |  "
+        f"Total: {campaign['total_items']}"
+    )

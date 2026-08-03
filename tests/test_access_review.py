@@ -1,8 +1,6 @@
 """Tests for Access Review campaign functionality."""
 
-import pytest
 from iam_governance import access_review
-from iam_governance.state import list_entitlements
 
 
 class TestAccessReview:
@@ -13,7 +11,16 @@ class TestAccessReview:
 
     def test_campaign_has_required_fields(self):
         campaign = access_review.run_access_review("test-fields")
-        required = ["campaign_name", "started_at", "status", "total_items", "approved", "denied", "users_reviewed", "items"]
+        required = [
+            "campaign_name",
+            "started_at",
+            "status",
+            "total_items",
+            "approved",
+            "denied",
+            "users_reviewed",
+            "items",
+        ]
         for field in required:
             assert field in campaign, f"Missing field: {field}"
 
@@ -21,7 +28,15 @@ class TestAccessReview:
         campaign = access_review.run_access_review("test-items")
         if campaign["items"]:
             item = campaign["items"][0]
-            required = ["item_id", "user_id", "user_name", "application", "reviewer", "decision", "decision_timestamp"]
+            required = [
+                "item_id",
+                "user_id",
+                "user_name",
+                "application",
+                "reviewer",
+                "decision",
+                "decision_timestamp",
+            ]
             for field in required:
                 assert field in item, f"Missing item field: {field}"
 
@@ -47,6 +62,7 @@ class TestAccessReview:
     def test_campaign_only_reviews_active_users(self, isolated_state):
         """Campaign should skip inactive users."""
         from iam_governance import jml
+
         jml.simulate_leaver("U001")  # make U001 inactive
         campaign = access_review.run_access_review("test-active-only")
         reviewed_user_ids = {item["user_id"] for item in campaign["items"]}

@@ -8,8 +8,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from iam_governance import rbac, abac
-from iam_governance.state import get_entitlement, set_entitlement, remove_entitlement
+from iam_governance import abac, rbac
+from iam_governance.state import get_entitlement, set_entitlement
 
 _THIS_DIR = Path(__file__).parent
 _PROJECT_ROOT = _THIS_DIR.parent.parent

@@ -11,8 +11,8 @@
                |___/  Governance Lab
 ```
 
-[![Tests](https://github.com/your-org/iam-governance-lab/actions/workflows/test.yml/badge.svg)](https://github.com/your-org/iam-governance-lab/actions/workflows/test.yml)
-[![Lint](https://github.com/your-org/iam-governance-lab/actions/workflows/lint.yml/badge.svg)](https://github.com/your-org/iam-governance-lab/actions/workflows/lint.yml)
+[![Tests](https://github.com/JulianoVinceCampos/iam-governance-lab/actions/workflows/test.yml/badge.svg)](https://github.com/JulianoVinceCampos/iam-governance-lab/actions/workflows/test.yml)
+[![Lint](https://github.com/JulianoVinceCampos/iam-governance-lab/actions/workflows/lint.yml/badge.svg)](https://github.com/JulianoVinceCampos/iam-governance-lab/actions/workflows/lint.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
 
@@ -128,7 +128,7 @@ state/entitlements.json   <-- single source of truth for current access
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/iam-governance-lab.git
+git clone https://github.com/JulianoVinceCampos/iam-governance-lab.git
 cd iam-governance-lab
 
 # Install with all dev dependencies

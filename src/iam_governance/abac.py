@@ -52,9 +52,7 @@ def evaluate_abac(user_attributes: dict[str, Any], abac_policy: dict[str, Any]) 
     return {"allowed": len(violations) == 0, "violations": violations}
 
 
-def evaluate_user_app_access(
-    user: dict[str, Any], application: dict[str, Any]
-) -> dict[str, Any]:
+def evaluate_user_app_access(user: dict[str, Any], application: dict[str, Any]) -> dict[str, Any]:
     """Convenience wrapper to evaluate ABAC for a user against a specific application."""
     abac_policy = application.get("abac_policy", {})
     user_attrs = user.get("attributes", {})
